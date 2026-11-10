@@ -214,6 +214,133 @@ console.log('Наличие:', getAvailabilityText(product.isAvailable));
 
 console.log('Описание:', getProductDescription(product));
 
+console.log('Список товаров SpookyShop:');
+
+for (let i = 0; i < products.length; i++) {
+  console.log(`${i + 1}. ${products[i].title}`);
+}
+
+console.log('Товары и цены SpookyShop:');
+
+for (const item of products) {
+  console.log(`${item.title} — ${formatPrice(item.price)}`);
+}
+
+console.log('Наличие товаров SpookyShop:');
+
+products.forEach((item, index) => {
+  console.log(`${index + 1}. ${item.title} — ${getAvailabilityText(item.isAvailable)}`);
+});
+
+function getProductTitles(products) {
+  return products.map((item) => item.title);
+}
+
+console.log('Названия товаров SpookyShop:');
+console.log(getProductTitles(products));
+
+function getAvailableProducts(products) {
+  return products.filter((item) => item.isAvailable);
+}
+
+console.log('Товары в наличии:');
+console.table(getAvailableProducts(products));
+
+function searchProducts(products, query) {
+  const normalizedQuery = query.trim().toLowerCase();
+
+  if (normalizedQuery === '') {
+    return products;
+  }
+
+  return products.filter((item) => {
+    return item.title.toLowerCase().includes(normalizedQuery);
+  });
+}
+
+console.log('Результаты поиска по слову "костюм":');
+console.table(searchProducts(products, 'костюм'));
+
+function filterProductsByCategory(products, category) {
+  if (category === 'all') {
+    return products;
+  }
+
+  return products.filter((item) => {
+    return item.category === category;
+  });
+}
+
+console.log('Товары категории "Декор":');
+console.table(filterProductsByCategory(products, 'decor'));
+
+function sortProductsByPrice(products, direction = 'asc') {
+  const productsCopy = [...products];
+
+  if (direction === 'desc') {
+    return productsCopy.sort((a, b) => b.price - a.price);
+  }
+
+  return productsCopy.sort((a, b) => a.price - b.price);
+}
+
+console.log('Товары по возрастанию цены:');
+console.table(sortProductsByPrice(products, 'asc'));
+
+console.log('Товары по убыванию цены:');
+console.table(sortProductsByPrice(products, 'desc'));
+
+function findProductById(products, id) {
+  return products.find((item) => item.id === id);
+}
+
+console.log('Товар с ID 5:');
+console.log(findProductById(products, 5));
+
+console.log('Товар с ID 100:');
+console.log(findProductById(products, 100));
+
+function calculateTotalPrice(products) {
+  return products.reduce((sum, item) => {
+    return sum + item.price;
+  }, 0);
+}
+
+console.log('Общая стоимость товаров:');
+console.log(formatPrice(calculateTotalPrice(products)));
+
+function countAvailableProducts(products) {
+  return products.filter((item) => item.isAvailable).length;
+}
+
+console.log('Всего товаров:', products.length);
+console.log('Товаров в наличии:', countAvailableProducts(products));
+
+function calculateAveragePrice(products) {
+  if (products.length === 0) {
+    return 0;
+  }
+
+  const totalPrice = calculateTotalPrice(products);
+  return Math.round(totalPrice / products.length);
+}
+
+console.log('Средняя цена товара:');
+console.log(formatPrice(calculateAveragePrice(products)));
+
+function getPreparedProducts(products, query, category, sortDirection) {
+  let result = [...products];
+
+  result = searchProducts(result, query);
+  result = filterProductsByCategory(result, category);
+  result = sortProductsByPrice(result, sortDirection);
+
+  return result;
+}
+
+console.log('Результат объединённого поиска:');
+console.table(getPreparedProducts(products, 'ведьм', 'decor', 'asc'));
+
 console.log('Цена больше 2000 ₽:', product.price > 2000);
 
 console.log('Цена равна 2490 ₽:', product.price === 2490);
@@ -236,10 +363,11 @@ if (messageElement) {
 const productOutputElement = document.querySelector('.product-output');
 
 if (productOutputElement) {
-  const finalPrice = calculateFinalPrice(product.price, product.discountPercent);
-  const status = getAvailabilityText(product.isAvailable);
-
-  productOutputElement.textContent =
-    `${product.title}: ${formatPrice(finalPrice)}. Статус: ${status}.`;
-
+  productOutputElement.textContent = [
+    `Всего товаров: ${products.length}`,
+    `Товаров в наличии: ${countAvailableProducts(products)}`,
+    `Средняя цена: ${formatPrice(calculateAveragePrice(products))}`,
+    `Результатов поиска "костюм": ${searchProducts(products, 'костюм').length}`
+  ].join('\n');
 }
+
