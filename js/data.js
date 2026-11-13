@@ -7,7 +7,10 @@ const products = [
     price: 2490,
     discountPercent: 10,
     rating: 4.8,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/skeleton.webp',
+    description: 'Костюм скелета с анатомическим принтом костей.',
+    isHit: true,
   },
   {
     id: 2,
@@ -16,7 +19,9 @@ const products = [
     price: 1890,
     discountPercent: 0,
     rating: 4.6,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/ghost.webp',
+    description: 'Костюм привидения для Хэллоуина.'
   },
   {
     id: 3,
@@ -25,7 +30,9 @@ const products = [
     price: 3890,
     discountPercent: 0,
     rating: 4.9,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/vampire.webp',
+    description: 'Готический костюм вампира с плащом.'
   },
   {
     id: 4,
@@ -34,7 +41,9 @@ const products = [
     price: 1190,
     discountPercent: 10,
     rating: 4.5,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/witch.webp',
+    description: 'Чёрная шляпа ведьмы.'
   },
   {
     id: 5,
@@ -43,7 +52,10 @@ const products = [
     price: 1590,
     discountPercent: 0,
     rating: 4.7,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/pumpkin.webp',
+    description: 'Светящаяся тыква Джек LED.',
+    isNew: true,
   },
   {
     id: 6,
@@ -52,7 +64,9 @@ const products = [
     price: 490,
     discountPercent: 0,
     rating: 4.4,
-    isAvailable: false
+    isAvailable: false,
+    image: 'images/blood.webp',
+    description: 'Искусственная кровь для грима.'
   },
   {
     id: 7,
@@ -61,7 +75,9 @@ const products = [
     price: 990,
     discountPercent: 0,
     rating: 4.7,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/scream.webp',
+    description: 'Маска Ghostface для Хэллоуина.'
   },
   {
     id: 8,
@@ -70,7 +86,10 @@ const products = [
     price: 590,
     discountPercent: 0,
     rating: 4.5,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/balloon.webp',
+    description: 'Набор праздничных шариков.',
+    isHit: true,
   },
   {
     id: 9,
@@ -79,7 +98,10 @@ const products = [
     price: 1290,
     discountPercent: 0,
     rating: 4.6,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/broom.webp',
+    description: 'Декоративная ведьмина метла.',
+    isNew: true,
   },
   {
     id: 10,
@@ -88,7 +110,10 @@ const products = [
     price: 350,
     discountPercent: 0,
     rating: 4.8,
-    isAvailable: true
+    isAvailable: true,
+    image: 'images/candy.webp',
+    description: 'Набор тематических леденцов.',
+    isHit: true,
   }
 ];
 const product = products[0];

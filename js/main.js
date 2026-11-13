@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.matchMedia('(min-width: 768px)').addEventListener('change', () => closeMenu());
   }
 
-  const filters = document.getElementById('catalog-filter-form');
   const filterDisclosure = document.querySelector('.catalog-filter-disclosure');
 
   if (filterDisclosure) {
@@ -46,62 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     updateDisclosure();
     wideScreen.addEventListener('change', updateDisclosure);
-  }
-
-  if (filters) {
-    const cards = Array.from(document.querySelectorAll('.catalog-products .product-card'));
-    const count = document.getElementById('catalog-results-count');
-    const empty = document.getElementById('catalog-empty');
-
-    const filterCards = () => {
-      const selectedTypes = Array.from(filters.querySelectorAll('[name="type"]:checked'), (input) => input.value);
-      const selectedStatuses = Array.from(filters.querySelectorAll('[name="status"]:checked'), (input) => input.value);
-      const fromField = filters.querySelector('[name="price-from"]');
-      const toField = filters.querySelector('[name="price-to"]');
-      const minPrice = fromField.value === '' ? 0 : Number(fromField.value);
-      const maxPrice = toField.value === '' ? Infinity : Number(toField.value);
-
-      if (minPrice > maxPrice) {
-        toField.setCustomValidity('Максимальная цена должна быть не меньше минимальной.');
-        toField.reportValidity();
-        return false;
-      }
-      toField.setCustomValidity('');
-      let visible = 0;
-
-      cards.forEach((card) => {
-        const price = Number(card.querySelector('.product-card__price').textContent.replace(/[^\d]/g, ''));
-        const badge = card.querySelector('.product-card__badge');
-        const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.some((status) =>
-          badge && badge.classList.contains(`product-card__badge--${status}`));
-        const matchesType = selectedTypes.length === 0 || selectedTypes.includes(card.dataset.category);
-        const show = matchesType && matchesStatus && price >= minPrice && price <= maxPrice;
-        card.hidden = !show;
-        if (show) visible += 1;
-      });
-
-      count.textContent = `Показано товаров: ${visible} из ${cards.length}`;
-      empty.hidden = visible !== 0;
-      return true;
-    };
-
-    filters.addEventListener('submit', (event) => {
-      event.preventDefault();
-      if (!filterCards()) return;
-      if (filterDisclosure && !window.matchMedia('(min-width: 1024px)').matches) {
-        filterDisclosure.open = false;
-      }
-    });
-
-    filters.querySelector('[name="price-to"]').addEventListener('input', (event) => {
-      event.target.setCustomValidity('');
-    });
-
-    filters.addEventListener('reset', () => {
-      filters.querySelector('[name="price-to"]').setCustomValidity('');
-      setTimeout(filterCards, 0);
-    });
-    filterCards();
   }
 
   const dialog = document.getElementById('order-dialog');
@@ -125,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelectorAll('.order-form').forEach((form) => {
+    if (form.id === 'order-form') {
+      return;
+    }
     const status = form.nextElementSibling?.classList.contains('success-message')
       ? form.nextElementSibling
       : null;
@@ -354,20 +300,26 @@ console.log('Есть скидка или высокий рейтинг:',
 
 console.log('Товар отсутствует:', !product.isAvailable);
 
-const messageElement = document.querySelector('.js-message');
+const popularCards = document.querySelectorAll('#popular .product-card');
 
-if (messageElement) {
-  messageElement.textContent = 'JavaScript подключён корректно!';
-}
+popularCards.forEach((card) => {
+  const title = card.querySelector('.product-card__title')?.textContent.trim();
+  const item = products.find((product) => product.title === title);
 
-const productOutputElement = document.querySelector('.product-output');
+  if (!item) {
+    card.remove();
+    return;
+  }
 
-if (productOutputElement) {
-  productOutputElement.textContent = [
-    `Всего товаров: ${products.length}`,
-    `Товаров в наличии: ${countAvailableProducts(products)}`,
-    `Средняя цена: ${formatPrice(calculateAveragePrice(products))}`,
-    `Результатов поиска "костюм": ${searchProducts(products, 'костюм').length}`
-  ].join('\n');
-}
+  const link = card.querySelector('.product-card__button');
+  const price = card.querySelector('.product-card__price');
 
+  if (link) {
+    link.href = `product.html?product=${item.id}`;
+  }
+
+  if (price) {
+    const finalPrice = calculateFinalPrice(item.price, item.discountPercent);
+    price.textContent = `Цена: ${formatPrice(finalPrice)}`;
+  }
+});
