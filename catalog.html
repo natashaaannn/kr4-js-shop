@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/responsive.css">
   <script src="js/data.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/catalog.js" defer></script>
 </head>
 <body>
 
@@ -88,9 +89,44 @@
 
       <section class="catalog-products">
         <h2 class="catalog-products__title">Товары</h2>
+
+<div class="catalog-controls">
+  <div class="catalog-controls__group">
+    <label for="catalog-search">Поиск товара</label>
+    <input
+      id="catalog-search"
+      class="catalog-controls__input"
+      type="search"
+      placeholder="Введите название товара"
+      autocomplete="off"
+    >
+  </div>
+
+  <div class="catalog-controls__group">
+    <label for="category-filter">Категория</label>
+    <select id="category-filter" class="catalog-controls__select">
+      <option value="all">Все категории</option>
+      <option value="costumes">Костюмы и маски</option>
+      <option value="decor">Декор и освещение</option>
+      <option value="makeup">Грим и эффекты</option>
+      <option value="sweets">Игры и сладости</option>
+    </select>
+  </div>
+
+  <div class="catalog-controls__group">
+    <label for="sort-select">Сортировка</label>
+    <select id="sort-select" class="catalog-controls__select">
+      <option value="default">По умолчанию</option>
+      <option value="price-asc">Сначала дешевле</option>
+      <option value="price-desc">Сначала дороже</option>
+      <option value="title-asc">По названию А–Я</option>
+    </select>
+  </div>
+</div>
+
         <p class="catalog-products__count" id="catalog-results-count" role="status" aria-live="polite">Показано товаров: 18</p>
         <p class="catalog-products__empty" id="catalog-empty" hidden>По выбранным параметрам товаров нет. Сбросьте фильтры или измените условия.</p>
-        <div class="products-grid">
+        <div class="products-grid" data-products-container>
 
           <article class="product-card" data-category="costumes">
             <span class="product-card__badge product-card__badge--top">ТОП</span>
