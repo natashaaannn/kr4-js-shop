@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://natashaaannn.github.io/kr3-responsive-shop/index.html</loc>
+    <loc>https://natashaaannn.github.io/kr4-js-shop/index.html</loc>
   </url>
   <url>
-    <loc>https://natashaaannn.github.io/kr3-responsive-shop/catalog.html</loc>
+    <loc>https://natashaaannn.github.io/kr4-js-shop/catalog.html</loc>
   </url>
   <url>
-    <loc>https://natashaaannn.github.io/kr3-responsive-shop/product.html</loc>
+    <loc>https://natashaaannn.github.io/kr4-js-shop/product.html</loc>
   </url>
   <url>
-    <loc>https://natashaaannn.github.io/kr3-responsive-shop/order.html</loc>
+    <loc>https://natashaaannn.github.io/kr4-js-shop/order.html</loc>
   </url>
   <url>
-    <loc>https://natashaaannn.github.io/kr3-responsive-shop/contacts.html</loc>
+    <loc>https://natashaaannn.github.io/kr4-js-shop/contacts.html</loc>
+  </url>
+  <url><loc>https://natashaaannn.github.io/kr4-js-shop/cart.html</loc></url>
+  <url>
+    <loc>https://natashaaannn.github.io/kr4-js-shop/favorites.html</loc>
   </url>
 </urlset>

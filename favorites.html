@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Избранные товары SpookyShop: сохраняйте понравившиеся костюмы и праздничный декор." name="description"/>
+<meta content="website" property="og:type"/>
+<meta content="Избранное — SpookyShop" property="og:title"/>
+<meta content="Сохранённые костюмы и декор SpookyShop." property="og:description"/>
+<meta content="https://natashaaannn.github.io/kr4-js-shop/images/skeleton.webp" property="og:image"/>
+<title>Избранное — SpookyShop</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/responsive.css" rel="stylesheet"/>
+<script defer="" src="js/data.js"></script><script defer="True" src="js/store.js"></script>
+<script defer="" src="js/main.js"></script>
+<script defer="" src="js/favorites.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">
+    Перейти к основному содержимому
+  </a>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="site-header__logo" href="index.html">SpookyShop</a>
+<button aria-controls="site-navigation" aria-expanded="false" class="site-nav__toggle" type="button"><span aria-hidden="true">☰</span> <span>Меню</span></button>
+<nav aria-label="Основная навигация" class="site-nav" id="site-navigation">
+<ul class="site-nav__list">
+<li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
+<li class="site-nav__item"><a aria-current="page" class="site-nav__link site-nav__link--active" href="favorites.html">Избранное <span class="nav-counter" data-favorite-count="">0</span></a></li><li class="site-nav__item"><a class="site-nav__link" href="cart.html">Корзина <span class="nav-counter" data-cart-count="">0</span></a></li><li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main class="main-content" id="main" tabindex="-1">
+<nav aria-label="Хлебные крошки" class="breadcrumbs">
+<a class="breadcrumbs__link" href="index.html">Главная</a>
+<span aria-current="page" class="breadcrumbs__current">Избранное</span>
+</nav>
+
+<section class="section section--card favorites-section">
+<h1 class="section__title">Избранные товары</h1>
+<p class="section__text">Здесь сохраняются товары, которые вы отметили сердечком. Вы можете вернуться к ним в любое время.</p>
+<p class="shop-empty favorites-empty" hidden="" id="favorites-empty">В избранном пока нет товаров. <a href="catalog.html">Перейти в каталог</a>, чтобы добавить понравившиеся товары.</p>
+<div class="products-grid favorites-grid" data-products-container="" id="favorites-grid"><noscript>Для работы избранного необходим JavaScript.</noscript></div>
+</section>
+</main>
+<div aria-live="polite" class="shop-notice" hidden="" id="shop-notice" role="status"></div><footer class="site-footer">
+<div class="site-footer__inner">
+<p class="site-footer__copy">© 2026 Магазин SpookyShop. Все права защищены.</p>
+</div>
+</footer>
+</body>
+</html>

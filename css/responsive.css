@@ -660,3 +660,32 @@ textarea:focus-visible {
     align-self: start;
   }
 }
+
+/* КР №4: удобная корзина и карточки на небольших экранах. */
+@media (max-width: 767px) {
+  .product-card__actions { justify-content: center; width: 100%; }
+  .product-card__actions .button { flex: 1 1 130px; }
+  .catalog-extra-actions .button { flex: 1 1 160px; }
+  .product-detail__actions .button { flex: 1 1 160px; }
+}
+@media (max-width: 479px) {
+  .cart-item { grid-template-columns: 1fr; text-align: center; }
+  .cart-item img { margin: 0 auto; }
+  .cart-item__controls { justify-content: center; }
+  .cart-summary { padding: 16px; }
+  .promo-form__fields .button, .cart-summary__actions .button { width: 100%; }
+  .breadcrumbs > * + *::before { margin: 0 6px; }
+}
+
+/* На широкой объединённой форме имя не растягивается на всю строку. */
+@media (min-width: 768px) {
+  .checkout-section .order-form:not(.order-form--modal-gap) .order-form__field:first-child {
+    grid-column: auto;
+  }
+}
+
+
+/* КР4 v7: верхние углы раскрытой боковой панели должны быть скруглены на ПК. */
+@media (min-width: 1024px) {
+  .catalog-filter-disclosure[open] > .catalog-filters { border-radius: 12px; }
+}

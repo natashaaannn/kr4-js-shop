@@ -1,118 +1,81 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Подробная информация о костюме скелета в магазине SpookyShop.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Костюм скелета — SpookyShop">
-  <meta property="og:description" content="Заказать светящийся костюм скелета с доставкой.">
-  <meta property="og:image" content="https://natashaaannn.github.io/kr3-responsive-shop/images/skeleton.png">
-  <title>Костюм скелета — SpookyShop</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <script src="js/data.js" defer></script>
-  <script src="js/main.js" defer></script>
-  <script src="js/product.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Подробная информация о костюме скелета в магазине SpookyShop." name="description"/>
+<meta content="website" property="og:type"/>
+<meta content="Товары SpookyShop" property="og:title"/>
+<meta content="Подробная информация о товаре в магазине SpookyShop." property="og:description"/>
+<meta content="https://natashaaannn.github.io/kr4-js-shop/images/skeleton.webp" property="og:image"/>
+<title>Костюм скелета — SpookyShop</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/responsive.css" rel="stylesheet"/>
+<script defer="" src="js/data.js"></script><script defer="True" src="js/store.js"></script>
+<script defer="" src="js/main.js"></script>
+<script defer="" src="js/product.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Перейти к основному содержимому</a>
-
-  <header class="site-header">
-    <div class="site-header__inner">
-      <a class="site-header__logo" href="index.html">SpookyShop</a>
-      <button class="site-nav__toggle" type="button" aria-controls="site-navigation" aria-expanded="false"><span aria-hidden="true">☰</span> <span>Меню</span></button>
-      <nav class="site-nav" id="site-navigation" aria-label="Основная навигация">
-        <ul class="site-nav__list">
-          <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
-          <li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
-          <li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
-          <li class="site-nav__item"><a class="site-nav__link" href="order.html">Заказ</a></li>
-          <li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main" class="main-content" tabindex="-1">
-    <nav class="breadcrumbs" aria-label="Хлебные крошки">
-      <a class="breadcrumbs__link" href="index.html">Главная</a>
-      <a class="breadcrumbs__link" href="catalog.html">Каталог</a>
-      <span class="breadcrumbs__current">Костюм скелета</span>
-    </nav>
-
-    <section class="section section--card">
-      <div class="product-detail">
-
-        <div class="product-detail__image-wrapper">
-          <picture>
-            <source type="image/webp" srcset="images/skeleton-480.webp 480w, images/skeleton-960.webp 960w, images/skeleton.webp 1024w" sizes="(max-width: 1023px) 100vw, 400px">
-            <img
-              class="product-detail__image"
-              src="images/skeleton.png"
-              srcset="images/skeleton-480.png 480w, images/skeleton-960.png 960w, images/skeleton.png 1024w"
-              sizes="(max-width: 1023px) 100vw, 400px"
-              alt="Костюм скелета"
-              width="1024"
-              height="1536">
-          </picture>
-        </div>
-
-        <div class="product-detail__info">
-          <h1 class="product-detail__title">Костюм скелета</h1>
-          <p class="product-detail__description">
+<a class="skip-link" href="#main">Перейти к основному содержимому</a>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="site-header__logo" href="index.html">SpookyShop</a>
+<button aria-controls="site-navigation" aria-expanded="false" class="site-nav__toggle" type="button"><span aria-hidden="true">☰</span> <span>Меню</span></button>
+<nav aria-label="Основная навигация" class="site-nav" id="site-navigation">
+<ul class="site-nav__list">
+<li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="favorites.html">Избранное <span class="nav-counter" data-favorite-count="">0</span></a></li><li class="site-nav__item"><a class="site-nav__link" href="cart.html">Корзина <span class="nav-counter" data-cart-count="">0</span></a></li><li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main class="main-content" id="main" tabindex="-1">
+<nav aria-label="Хлебные крошки" class="breadcrumbs">
+<a class="breadcrumbs__link" href="index.html">Главная</a>
+<a class="breadcrumbs__link" href="catalog.html">Каталог</a>
+<span aria-current="page" class="breadcrumbs__current">Костюм скелета</span>
+</nav>
+<section class="section section--card">
+<div class="product-detail">
+<div class="product-detail__image-wrapper">
+<picture>
+<source sizes="(max-width: 1023px) 100vw, 400px" srcset="images/skeleton-480.webp 480w, images/skeleton-960.webp 960w, images/skeleton.webp 1024w" type="image/webp"/>
+<img alt="Костюм скелета" class="product-detail__image" height="1536" sizes="(max-width: 1023px) 100vw, 400px" src="images/skeleton.png" srcset="images/skeleton-480.png 480w, images/skeleton-960.png 960w, images/skeleton.png 1024w" width="1024"/>
+</picture>
+</div>
+<div class="product-detail__info">
+<h1 class="product-detail__title">Костюм скелета</h1>
+<p class="product-detail__description">
             Премиальный облегающий комбинезон со зловещим анатомическим принтом костей, который ярко фосфоресцирует в полной темноте. Изготовлен из качественного дышащего эластичного материала, идеально садится по фигуре и не сковывает движения на карнавальной вечеринке. В комплекте идут удобная маска-балаклава и плотные перчатки.
           </p>
-          <p class="product-detail__price">
+<p class="product-detail__price">
             Цена: 2 990 руб.
           </p>
-          <a class="button button--primary product-detail__button" href="order.html">Заказать</a>
-        </div>
-      </div>
-
-      <dl class="product-specs-mobile" aria-label="Характеристики костюма скелета">
-        <div class="product-specs-mobile__item"><dt>Материал</dt><dd>Высококачественный эластан, полиэстер</dd></div>
-        <div class="product-specs-mobile__item"><dt>Особенности эффекта</dt><dd>Люминесцентное неоновое свечение в темноте</dd></div>
-        <div class="product-specs-mobile__item"><dt>Комплектация</dt><dd>Комбинезон, маска-балаклава, перчатки</dd></div>
-        <div class="product-specs-mobile__item"><dt>Рекомендации по уходу</dt><dd>Ручная стирка в прохладной воде</dd></div>
-      </dl>
-      <div class="table-wrapper">
-        <table class="product-table">
-          <caption class="catalog-products__title catalog-products__title--hidden">Характеристики Костюма Скелета</caption>
-          <thead>
-            <tr class="product-table__row">
-              <th class="product-table__th" scope="col">Параметр</th>
-              <th class="product-table__th" scope="col">Значение</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="product-table__row">
-              <th class="product-table__td product-table__property" scope="row">Материал</th>
-              <td class="product-table__td">Высококачественный эластан, полиэстер</td>
-            </tr>
-            <tr class="product-table__row">
-              <th class="product-table__td product-table__property" scope="row">Особенности эффекта</th>
-              <td class="product-table__td">Люминесцентное неоновое свечение в темноте</td>
-            </tr>
-            <tr class="product-table__row">
-              <th class="product-table__td product-table__property" scope="row">Комплектация</th>
-              <td class="product-table__td">Комбинезон, маска-балаклава, перчатки</td>
-            </tr>
-            <tr class="product-table__row">
-              <th class="product-table__td product-table__property" scope="row">Рекомендации по уходу</th>
-              <td class="product-table__td">Ручная стирка в прохладной воде</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="site-footer__inner">
-      <p class="site-footer__copy">&copy; 2026 Магазин SpookyShop. Все права защищены.</p>
-    </div>
-  </footer>
-
+<a class="button button--primary product-detail__button" href="order.html">Заказать</a>
+</div>
+</div>
+<dl aria-label="Характеристики товара" class="product-specs-mobile"></dl>
+<div class="table-wrapper">
+<table class="product-table">
+<caption class="catalog-products__title catalog-products__title--hidden">Характеристики товара</caption>
+<thead>
+<tr class="product-table__row">
+<th class="product-table__th" scope="col">Параметр</th>
+<th class="product-table__th" scope="col">Значение</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</section>
+</main>
+<div aria-live="polite" class="shop-notice" hidden="" id="shop-notice" role="status"></div><footer class="site-footer">
+<div class="site-footer__inner">
+<p class="site-footer__copy">© 2026 Магазин SpookyShop. Все права защищены.</p>
+</div>
+</footer>
 </body>
 </html>

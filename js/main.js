@@ -1,110 +1,288 @@
+// Общие функции проекта и поведение, одинаковое для всех страниц.
 document.documentElement.classList.add('js');
+
+function formatPrice(price) {
+  return Math.round(price).toLocaleString('ru-RU') + ' ₽';
+}
+
+function calculateDiscount(price, discountPercent) {
+  return price * discountPercent / 100;
+}
+
+function calculateFinalPrice(price, discountPercent = 0) {
+  return price - calculateDiscount(price, discountPercent);
+}
+
+function getAvailabilityText(isAvailable) {
+  return isAvailable ? 'В наличии' : 'Нет в наличии';
+}
+
+function getProductDescription(item) {
+  return item.title + ' — ' + formatPrice(calculateFinalPrice(item.price, item.discountPercent));
+}
+
+function getProductTitles(items) {
+  const titles = [];
+  for (const item of items) {
+    titles.push(item.title);
+  }
+  return titles;
+}
+
+function getAvailableProducts(items) {
+  return items.filter((item) => item.isAvailable);
+}
+
+function searchProducts(items, query) {
+  const normalized = query.trim().toLowerCase();
+  return normalized ? items.filter((item) => item.title.toLowerCase().includes(normalized)) : [...items];
+}
+
+function filterProductsByCategory(items, category) {
+  return category === 'all' ? [...items] : items.filter((item) => item.category === category);
+}
+
+function sortProductsByPrice(items, direction = 'asc') {
+  const copy = [...items];
+  return copy.sort((a, b) => {
+    const priceA = calculateFinalPrice(a.price, a.discountPercent);
+    const priceB = calculateFinalPrice(b.price, b.discountPercent);
+    return direction === 'desc' ? priceB - priceA : priceA - priceB;
+  });
+}
+
+function findProductById(items, id) {
+  return items.find((item) => item.id === id);
+}
+
+function calculateTotalPrice(items) {
+  return items.reduce((sum, item) => sum + item.price, 0);
+}
+
+function countAvailableProducts(items) {
+  let count = 0;
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i].isAvailable) count += 1;
+  }
+  return count;
+}
+
+function calculateAveragePrice(items) {
+  return items.length ? Math.round(calculateTotalPrice(items) / items.length) : 0;
+}
+
+function getPreparedProducts(items, query, category, sortDirection) {
+  return sortProductsByPrice(filterProductsByCategory(searchProducts(items, query), category), sortDirection);
+}
+
+const categoryNames = {
+  costumes: 'Костюмы и маски',
+  decor: 'Декор',
+  makeup: 'Грим',
+  sweets: 'Сладости'
+};
+
+function createProductCard(item) {
+  const card = document.createElement('article');
+  card.className = 'product-card';
+  card.dataset.category = item.category;
+  card.dataset.productId = String(item.id);
+
+  const meta = document.createElement('div');
+  meta.className = 'product-card__meta';
+  const category = document.createElement('span');
+  category.className = 'product-card__category';
+  category.textContent = categoryNames[item.category];
+  meta.append(category);
+
+  if (item.discountPercent > 0 || item.isNew || item.isHit) {
+    const badge = document.createElement('span');
+    badge.className = 'product-card__badge ' +
+      (item.discountPercent > 0 ? 'product-card__badge--discount' :
+        item.isNew ? 'product-card__badge--new' : 'product-card__badge--hit');
+    badge.textContent = item.discountPercent > 0 ? `−${item.discountPercent}%` : item.isNew ? 'Новинка' : 'Хит';
+    meta.append(badge);
+  }
+
+  const picture = document.createElement('picture');
+  const source = document.createElement('source');
+  source.type = 'image/webp';
+  const base = item.image.replace('.webp', '');
+  if (item.id === 7) {
+    source.srcset = `${base}-240.webp 240w, ${item.image} 400w`;
+  } else {
+    source.srcset = `${base}-480.webp 480w, ${base}-960.webp 960w, ${item.image} 1024w`;
+  }
+  source.sizes = '(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw';
+  picture.append(source);
+
+  const image = document.createElement('img');
+  image.className = 'product-card__image';
+  image.src = item.image;
+  image.alt = item.title;
+  image.loading = 'lazy';
+  image.width = 400;
+  image.height = 400;
+  picture.append(image);
+
+  const title = document.createElement('h3');
+  title.className = 'product-card__title';
+  title.textContent = item.title;
+
+  const description = document.createElement('p');
+  description.className = 'product-card__description';
+  description.textContent = item.description;
+
+  const price = document.createElement('p');
+  price.className = 'product-card__price';
+  price.textContent = formatPrice(calculateFinalPrice(item.price, item.discountPercent));
+  if (item.discountPercent > 0) {
+    const previous = document.createElement('s');
+    previous.className = 'product-card__old-price';
+    previous.textContent = formatPrice(item.price);
+    price.prepend(previous);
+  }
+
+  const availability = document.createElement('p');
+  availability.className = 'product-card__availability';
+  availability.textContent = getAvailabilityText(item.isAvailable) + ' · ★ ' + item.rating;
+  if (!item.isAvailable) availability.classList.add('is-unavailable');
+
+  const actions = document.createElement('div');
+  actions.className = 'product-card__actions';
+  const link = document.createElement('a');
+  link.className = 'button button--secondary';
+  link.href = `product.html?product=${item.id}`;
+  link.textContent = 'Подробнее';
+  actions.append(link);
+
+  const buy = document.createElement('button');
+  buy.type = 'button';
+  buy.className = 'button button--primary';
+  buy.dataset.action = 'add-to-cart';
+  buy.dataset.productId = String(item.id);
+  buy.textContent = item.isAvailable ? 'В корзину' : 'Нет в наличии';
+  buy.disabled = !item.isAvailable;
+  actions.append(buy);
+
+  const favorite = document.createElement('button');
+  favorite.type = 'button';
+  favorite.className = 'product-card__favorite';
+  favorite.dataset.action = 'toggle-favorite';
+  favorite.dataset.productId = String(item.id);
+  favorite.setAttribute('aria-pressed', String(isFavorite(item.id)));
+  favorite.setAttribute('aria-label', isFavorite(item.id) ? `Убрать из избранного: ${item.title}` : `В избранное: ${item.title}`);
+  favorite.textContent = isFavorite(item.id) ? '♥' : '♡';
+  meta.append(favorite);
+  card.append(meta, picture, title, description, price, availability, actions);
+  return card;
+}
+
+function updateShopCounters() {
+  document.querySelectorAll('[data-cart-count]').forEach((node) => {
+    node.textContent = String(getCartCount());
+  });
+  document.querySelectorAll('[data-favorite-count]').forEach((node) => {
+    node.textContent = String(getFavorites().length);
+  });
+  document.querySelectorAll('[data-action="toggle-favorite"]').forEach((button) => {
+    const id = Number(button.dataset.productId);
+    const selected = isFavorite(id);
+    const item = findProductById(products, id);
+    button.setAttribute('aria-pressed', String(selected));
+    button.setAttribute('aria-label', selected ? `Убрать из избранного: ${item.title}` : `В избранное: ${item.title}`);
+    button.textContent = selected ? '♥' : '♡';
+  });
+}
+
+function showShopNotice(text) {
+  const notice = document.getElementById('shop-notice');
+  if (!notice) return;
+  const message = document.createElement('span');
+  message.textContent = text;
+  const close = document.createElement('button');
+  close.className = 'shop-notice__close';
+  close.type = 'button';
+  close.dataset.action = 'hide-notice';
+  close.setAttribute('aria-label', 'Закрыть сообщение');
+  close.textContent = '×';
+  notice.replaceChildren(message, close);
+  notice.hidden = false;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const menuButton = document.querySelector('.site-nav__toggle');
   const navigation = document.getElementById('site-navigation');
-
   if (menuButton && navigation) {
-    const closeMenu = (restoreFocus = false) => {
+    const closeMenu = (focusButton = false) => {
       menuButton.setAttribute('aria-expanded', 'false');
       navigation.classList.remove('is-open');
-      if (restoreFocus) menuButton.focus();
+      if (focusButton) menuButton.focus();
     };
-
     menuButton.addEventListener('click', () => {
-      const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-      menuButton.setAttribute('aria-expanded', String(!isExpanded));
-      navigation.classList.toggle('is-open', !isExpanded);
+      const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', String(!expanded));
+      navigation.classList.toggle('is-open', !expanded);
     });
-
-    navigation.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => closeMenu());
-    });
-
+    navigation.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu()));
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
-        closeMenu(true);
-      }
+      if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') closeMenu(true);
     });
-
     document.addEventListener('click', (event) => {
-      if (!navigation.contains(event.target) && !menuButton.contains(event.target)) {
-        closeMenu();
-      }
+      if (!navigation.contains(event.target) && !menuButton.contains(event.target)) closeMenu();
     });
-
     window.matchMedia('(min-width: 768px)').addEventListener('change', () => closeMenu());
   }
 
   const filterDisclosure = document.querySelector('.catalog-filter-disclosure');
-
   if (filterDisclosure) {
-    const wideScreen = window.matchMedia('(min-width: 1024px)');
-    const updateDisclosure = () => {
-      filterDisclosure.open = wideScreen.matches;
-    };
-    updateDisclosure();
-    wideScreen.addEventListener('change', updateDisclosure);
+    const wide = window.matchMedia('(min-width: 1024px)');
+    const update = () => { filterDisclosure.open = wide.matches; };
+    update();
+    wide.addEventListener('change', update);
   }
 
-  const dialog = document.getElementById('order-dialog');
-  const openDialog = document.getElementById('open-callback-dialog');
-  const closeDialog = document.getElementById('close-order-dialog');
-
-  if (dialog && openDialog) {
-    openDialog.addEventListener('click', () => {
-      const status = dialog.querySelector('.success-message');
-      if (status) status.hidden = true;
-      dialog.showModal();
-    });
-
-    if (closeDialog) closeDialog.addEventListener('click', () => dialog.close());
-
-    dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) dialog.close();
-    });
-
-    dialog.addEventListener('close', () => openDialog.focus());
-  }
-
-  document.querySelectorAll('.order-form').forEach((form) => {
-    if (form.id === 'order-form') {
-      return;
-    }
+  // Для обратной связи используется нативная проверка, заказ проверяется в validation.js.
+  document.querySelectorAll('.js-demo-form').forEach((form) => {
     const status = form.nextElementSibling?.classList.contains('success-message')
-      ? form.nextElementSibling
-      : null;
-
-    form.querySelectorAll('input, select, textarea').forEach((field) => {
-      const clearState = () => {
-        field.removeAttribute('aria-invalid');
-        if (status) status.hidden = true;
-      };
-      field.addEventListener('input', clearState);
-      field.addEventListener('change', clearState);
-    });
-
+      ? form.nextElementSibling : null;
     form.addEventListener('submit', (event) => {
       event.preventDefault();
-      const fields = Array.from(form.elements).filter((field) => field.willValidate);
-      fields.forEach((field) => field.removeAttribute('aria-invalid'));
+      form.querySelectorAll('[aria-invalid="true"]').forEach((field) => field.removeAttribute('aria-invalid'));
       if (status) status.hidden = true;
-
       if (!form.checkValidity()) {
-        fields.forEach((field) => {
+        form.querySelectorAll('input, textarea').forEach((field) => {
           if (!field.checkValidity()) field.setAttribute('aria-invalid', 'true');
         });
         form.reportValidity();
         return;
       }
-
       if (status) {
         status.hidden = false;
         status.focus();
       }
       form.reset();
     });
+    form.querySelectorAll('input, textarea').forEach((field) => {
+      field.addEventListener('input', () => field.removeAttribute('aria-invalid'));
+    });
   });
+
+  const dialog = document.getElementById('order-dialog');
+  const openDialog = document.getElementById('open-callback-dialog');
+  const closeDialog = document.getElementById('close-order-dialog');
+  if (dialog && openDialog) {
+    openDialog.addEventListener('click', () => {
+      const status = dialog.querySelector('.success-message');
+      if (status) status.hidden = true;
+      dialog.showModal();
+    });
+    if (closeDialog) closeDialog.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => openDialog.focus());
+  }
 
   const map = document.querySelector('.map-container');
   if (map) {
@@ -115,211 +293,39 @@ document.addEventListener('DOMContentLoaded', () => {
       frame.loading = 'lazy';
       return true;
     };
-
     if (!labelMap()) {
-      const observer = new MutationObserver(() => {
-        if (labelMap()) observer.disconnect();
-      });
+      const observer = new MutationObserver(() => { if (labelMap()) observer.disconnect(); });
       observer.observe(map, { childList: true, subtree: true });
     }
   }
-});
 
-function formatPrice(price) {
-  return price.toLocaleString('ru-RU') + ' ₽';
-}
-
-function calculateDiscount(price, discountPercent) {
-  return price * discountPercent / 100;
-}
-
-function calculateFinalPrice(price, discountPercent) {
-  const discountValue = calculateDiscount(price, discountPercent);
-  return price - discountValue;
-}
-
-function getAvailabilityText(isAvailable) {
-  if (isAvailable) {
-    return 'В наличии';
-  } else {
-    return 'Нет в наличии';
-  }
-}
-
-function getProductDescription(product) {
-  return product.title + ' — ' + formatPrice(product.price);
-}
-
-console.log('Цена:', formatPrice(product.price));
-
-console.log('Цена со скидкой:', formatPrice(
-  calculateFinalPrice(product.price, product.discountPercent)
-));
-
-console.log('Наличие:', getAvailabilityText(product.isAvailable));
-
-console.log('Описание:', getProductDescription(product));
-
-console.log('Список товаров SpookyShop:');
-
-for (let i = 0; i < products.length; i++) {
-  console.log(`${i + 1}. ${products[i].title}`);
-}
-
-console.log('Товары и цены SpookyShop:');
-
-for (const item of products) {
-  console.log(`${item.title} — ${formatPrice(item.price)}`);
-}
-
-console.log('Наличие товаров SpookyShop:');
-
-products.forEach((item, index) => {
-  console.log(`${index + 1}. ${item.title} — ${getAvailabilityText(item.isAvailable)}`);
-});
-
-function getProductTitles(products) {
-  return products.map((item) => item.title);
-}
-
-console.log('Названия товаров SpookyShop:');
-console.log(getProductTitles(products));
-
-function getAvailableProducts(products) {
-  return products.filter((item) => item.isAvailable);
-}
-
-console.log('Товары в наличии:');
-console.table(getAvailableProducts(products));
-
-function searchProducts(products, query) {
-  const normalizedQuery = query.trim().toLowerCase();
-
-  if (normalizedQuery === '') {
-    return products;
+  const popular = document.querySelector('#popular [data-products-container]');
+  if (popular) {
+    const featured = products.filter((item) => item.isHit || item.isNew || item.rating >= 4.9).slice(0, 6);
+    popular.replaceChildren(...featured.map(createProductCard));
   }
 
-  return products.filter((item) => {
-    return item.title.toLowerCase().includes(normalizedQuery);
+  document.addEventListener('click', (event) => {
+    const cartButton = event.target.closest('[data-action="add-to-cart"]');
+    if (cartButton) {
+      const item = findProductById(products, Number(cartButton.dataset.productId));
+      if (item && addToCart(item.id)) showShopNotice(`${item.title} добавлен в корзину.`);
+    }
+    const favoriteButton = event.target.closest('[data-action="toggle-favorite"]');
+    if (favoriteButton) {
+      const id = Number(favoriteButton.dataset.productId);
+      const item = findProductById(products, id);
+      if (item) {
+        const added = toggleFavorite(id);
+        showShopNotice(added ? `${item.title} добавлен в избранное.` : `${item.title} удалён из избранного.`);
+      }
+    }
+    if (event.target.closest('[data-action="hide-notice"]')) {
+      document.getElementById('shop-notice').hidden = true;
+    }
   });
-}
 
-console.log('Результаты поиска по слову "костюм":');
-console.table(searchProducts(products, 'костюм'));
-
-function filterProductsByCategory(products, category) {
-  if (category === 'all') {
-    return products;
-  }
-
-  return products.filter((item) => {
-    return item.category === category;
-  });
-}
-
-console.log('Товары категории "Декор":');
-console.table(filterProductsByCategory(products, 'decor'));
-
-function sortProductsByPrice(products, direction = 'asc') {
-  const productsCopy = [...products];
-
-  if (direction === 'desc') {
-    return productsCopy.sort((a, b) => b.price - a.price);
-  }
-
-  return productsCopy.sort((a, b) => a.price - b.price);
-}
-
-console.log('Товары по возрастанию цены:');
-console.table(sortProductsByPrice(products, 'asc'));
-
-console.log('Товары по убыванию цены:');
-console.table(sortProductsByPrice(products, 'desc'));
-
-function findProductById(products, id) {
-  return products.find((item) => item.id === id);
-}
-
-console.log('Товар с ID 5:');
-console.log(findProductById(products, 5));
-
-console.log('Товар с ID 100:');
-console.log(findProductById(products, 100));
-
-function calculateTotalPrice(products) {
-  return products.reduce((sum, item) => {
-    return sum + item.price;
-  }, 0);
-}
-
-console.log('Общая стоимость товаров:');
-console.log(formatPrice(calculateTotalPrice(products)));
-
-function countAvailableProducts(products) {
-  return products.filter((item) => item.isAvailable).length;
-}
-
-console.log('Всего товаров:', products.length);
-console.log('Товаров в наличии:', countAvailableProducts(products));
-
-function calculateAveragePrice(products) {
-  if (products.length === 0) {
-    return 0;
-  }
-
-  const totalPrice = calculateTotalPrice(products);
-  return Math.round(totalPrice / products.length);
-}
-
-console.log('Средняя цена товара:');
-console.log(formatPrice(calculateAveragePrice(products)));
-
-function getPreparedProducts(products, query, category, sortDirection) {
-  let result = [...products];
-
-  result = searchProducts(result, query);
-  result = filterProductsByCategory(result, category);
-  result = sortProductsByPrice(result, sortDirection);
-
-  return result;
-}
-
-console.log('Результат объединённого поиска:');
-console.table(getPreparedProducts(products, 'ведьм', 'decor', 'asc'));
-
-console.log('Цена больше 2000 ₽:', product.price > 2000);
-
-console.log('Цена равна 2490 ₽:', product.price === 2490);
-
-console.log('Есть скидка:', product.discountPercent !== 0);
-
-console.log('Можно заказать:', product.price > 0 && product.isAvailable);
-
-console.log('Есть скидка или высокий рейтинг:',
-  product.discountPercent > 0 || product.rating >= 4.5);
-
-console.log('Товар отсутствует:', !product.isAvailable);
-
-const popularCards = document.querySelectorAll('#popular .product-card');
-
-popularCards.forEach((card) => {
-  const title = card.querySelector('.product-card__title')?.textContent.trim();
-  const item = products.find((product) => product.title === title);
-
-  if (!item) {
-    card.remove();
-    return;
-  }
-
-  const link = card.querySelector('.product-card__button');
-  const price = card.querySelector('.product-card__price');
-
-  if (link) {
-    link.href = `product.html?product=${item.id}`;
-  }
-
-  if (price) {
-    const finalPrice = calculateFinalPrice(item.price, item.discountPercent);
-    price.textContent = `Цена: ${formatPrice(finalPrice)}`;
-  }
+  document.addEventListener('cart-updated', updateShopCounters);
+  document.addEventListener('favorites-updated', updateShopCounters);
+  updateShopCounters();
 });

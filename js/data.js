@@ -1,122 +1,145 @@
-
+// Единый источник данных для каталога, страницы товара и оформления заказа.
 const products = [
   {
     id: 1,
     title: 'Костюм скелета',
+    feature: 'Принт с изображением костей скелета',
     category: 'costumes',
     price: 2490,
     discountPercent: 10,
     rating: 4.8,
     isAvailable: true,
-    image: 'images/skeleton.webp',
-    description: 'Костюм скелета с анатомическим принтом костей.',
     isHit: true,
+    isNew: false,
+    image: 'images/skeleton.webp',
+    description: 'Костюм скелета с анатомическим принтом костей для хэллоуинской вечеринки, тематической фотосессии или карнавала.'
   },
   {
     id: 2,
     title: 'Костюм привидения',
+    feature: 'Образ привидения',
     category: 'costumes',
     price: 1890,
     discountPercent: 0,
     rating: 4.6,
     isAvailable: true,
+    isHit: false,
+    isNew: false,
     image: 'images/ghost.webp',
-    description: 'Костюм привидения для Хэллоуина.'
+    description: 'Лёгкий образ привидения для мистической вечеринки и весёлых хэллоуинских розыгрышей.'
   },
   {
     id: 3,
     title: 'Костюм вампира',
+    feature: 'Готический образ с плащом',
     category: 'costumes',
     price: 3890,
     discountPercent: 0,
     rating: 4.9,
     isAvailable: true,
+    isHit: false,
+    isNew: false,
     image: 'images/vampire.webp',
-    description: 'Готический костюм вампира с плащом.'
+    description: 'Готический костюм вампира с плащом для эффектного карнавального образа.'
   },
   {
     id: 4,
     title: 'Шляпа ведьмы',
+    feature: 'Остроконечная шляпа',
     category: 'costumes',
     price: 1190,
     discountPercent: 10,
     rating: 4.5,
     isAvailable: true,
+    isHit: false,
+    isNew: false,
     image: 'images/witch.webp',
-    description: 'Чёрная шляпа ведьмы.'
+    description: 'Остроконечная чёрная шляпа ведьмы — выразительная деталь праздничного костюма.'
   },
   {
     id: 5,
     title: 'Тыква Джек LED',
+    feature: 'Светодиодная подсветка',
     category: 'decor',
     price: 1590,
     discountPercent: 0,
     rating: 4.7,
     isAvailable: true,
-    image: 'images/pumpkin.webp',
-    description: 'Светящаяся тыква Джек LED.',
+    isHit: false,
     isNew: true,
+    image: 'images/pumpkin.webp',
+    description: 'Светящаяся декоративная тыква Джек со светодиодной подсветкой для дома или вечеринки.'
   },
   {
     id: 6,
     title: 'Тюбик искусственной крови',
+    feature: 'Средство для театрального грима',
     category: 'makeup',
     price: 490,
     discountPercent: 0,
     rating: 4.4,
     isAvailable: false,
+    isHit: false,
+    isNew: false,
     image: 'images/blood.webp',
-    description: 'Искусственная кровь для грима.'
+    description: 'Искусственная кровь для создания театрального грима и страшных образов на Хэллоуин.'
   },
   {
     id: 7,
     title: 'Хоррор-маска Ghostface',
+    feature: 'Маска в стиле Ghostface',
     category: 'costumes',
     price: 990,
     discountPercent: 0,
     rating: 4.7,
     isAvailable: true,
+    isHit: false,
+    isNew: false,
     image: 'images/scream.webp',
-    description: 'Маска Ghostface для Хэллоуина.'
+    description: 'Хоррор-маска Ghostface для костюмированной вечеринки и тематических фотографий.'
   },
   {
     id: 8,
     title: 'Набор шариков Хеллоуин',
+    feature: 'Тематический набор воздушных шариков',
     category: 'decor',
     price: 590,
     discountPercent: 0,
     rating: 4.5,
     isAvailable: true,
-    image: 'images/balloon.webp',
-    description: 'Набор праздничных шариков.',
     isHit: true,
+    isNew: false,
+    image: 'images/balloon.webp',
+    description: 'Набор праздничных шариков.'
   },
   {
     id: 9,
     title: 'Ведьмина метла',
+    feature: 'Декоративная метла для праздничного оформления',
     category: 'decor',
     price: 1290,
     discountPercent: 0,
     rating: 4.6,
     isAvailable: true,
-    image: 'images/broom.webp',
-    description: 'Декоративная ведьмина метла.',
+    isHit: false,
     isNew: true,
+    image: 'images/broom.webp',
+    description: 'Декоративная ведьмина метла.'
   },
   {
     id: 10,
     title: 'Набор леденцов Spooky Candy',
+    feature: 'Тематические хэллоуинские леденцы',
     category: 'sweets',
     price: 350,
     discountPercent: 0,
     rating: 4.8,
     isAvailable: true,
-    image: 'images/candy.webp',
-    description: 'Набор тематических леденцов.',
     isHit: true,
+    isNew: false,
+    image: 'images/candy.webp',
+    description: 'Набор тематических леденцов.'
   }
 ];
+// Первый товар сохраняется для упражнений практики №15.
 const product = products[0];
-
-console.log('Товары SpookyShop:');
-console.table(products);
