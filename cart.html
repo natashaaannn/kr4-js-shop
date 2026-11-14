@@ -4,14 +4,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Корзина SpookyShop: товары, промокод, сумма и оформление заказа на одной странице." name="description"/>
-<title>Корзина и оформление заказа — SpookyShop</title>
+<meta content="Корзина SpookyShop: выбранные товары, промокод и итоговая стоимость." name="description"/>
+<title>Корзина — SpookyShop</title>
 <link href="css/style.css" rel="stylesheet"/>
 <link href="css/responsive.css" rel="stylesheet"/>
 <script defer="" src="js/data.js"></script><script defer="True" src="js/store.js"></script>
 <script defer="" src="js/main.js"></script>
 <script defer="" src="js/cart.js"></script>
-<script defer="" src="js/validation.js"></script></head>
+</head>
 <body>
 <a class="skip-link" href="#main">Перейти к основному содержимому</a>
 <header class="site-header">
@@ -31,12 +31,12 @@
 <main class="main-content" id="main" tabindex="-1">
 <nav aria-label="Хлебные крошки" class="breadcrumbs">
 <a class="breadcrumbs__link" href="index.html">Главная</a>
-<span aria-current="page" class="breadcrumbs__current">Корзина и заказ</span>
+<span aria-current="page" class="breadcrumbs__current">Корзина</span>
 </nav>
 <section class="section section--card">
-<h1 class="section__title">Корзина и оформление заказа</h1>
-<p class="section__text">Выберите товары, проверьте сумму и заполните контактные данные — всё на одной странице.</p>
-<p class="checkout-success" hidden="" id="checkout-success" role="status" tabindex="-1">Ваш заказ принят в демонстрационном режиме. Данные никуда не отправлялись.</p><p class="shop-empty cart-empty" hidden="" id="cart-empty">В корзине пока нет товаров. <a href="catalog.html">Перейти в каталог</a>, чтобы выбрать понравившиеся товары.</p>
+<h1 class="section__title">Корзина</h1>
+<p class="section__text">Проверьте выбранные товары, при необходимости измените их количество и переходите к оформлению заказа.</p>
+<p class="shop-empty cart-empty" hidden="" id="cart-empty">В корзине пока нет товаров. <a href="catalog.html">Перейти в каталог</a>, чтобы выбрать понравившиеся товары.</p>
 <section aria-labelledby="cart-items-heading" class="checkout-section checkout-section--cart-items" hidden="" id="cart-items-section"><h2 class="checkout-step__title" id="cart-items-heading">1. Ваши товары</h2><div aria-live="polite" class="cart-list" id="cart-list"></div></section>
 <section aria-label="Стоимость заказа" class="cart-summary checkout-section" hidden="" id="cart-summary">
 <h2 class="checkout-step__title">2. Итоговая стоимость</h2>
@@ -55,42 +55,9 @@
 <div class="cart-summary__actions">
 
 <button class="button button--secondary" id="cart-clear" type="button">Очистить корзину</button>
+<a class="button button--primary" href="order.html">Перейти к оформлению</a>
 </div>
-</section><section aria-labelledby="checkout-heading" class="checkout-section" hidden="" id="checkout-section"><h2 class="checkout-step__title" id="checkout-heading">3. Оформление заказа</h2><p class="checkout-section__intro">Укажите данные для связи и желаемую дату доставки. Заказ включает все товары из корзины по итоговой цене выше.</p><form action="#" class="order-form checkout-form" id="order-form" method="post" novalidate="">
-
-<div class="order-form__field">
-<label class="order-form__label" for="full-order-name">Ваше имя</label>
-<input class="order-form__input" id="full-order-name" name="name" placeholder="Введите имя и фамилию" required="" type="text"/>
-<p class="form-error" id="order-name-error"></p>
-</div>
-<div class="order-form__field">
-<label class="order-form__label" for="full-order-email">E-mail для связи</label>
-<input autocomplete="email" class="order-form__input" id="full-order-email" name="email" placeholder="example@mail.ru" required="" type="email"/>
-<p class="form-error" id="order-email-error"></p>
-</div>
-<div class="order-form__field">
-<label class="order-form__label" for="full-order-phone">Контактный телефон</label>
-<input class="order-form__input" id="full-order-phone" inputmode="tel" name="phone" placeholder="+7 (900) 000-00-00" required="" type="tel"/>
-<p class="form-error" id="order-phone-error"></p>
-<small class="order-form__help">Формат: +7 (900) 000-00-00 или 8 (900) 000-00-00</small>
-</div>
-<div class="order-form__field">
-<label class="order-form__label" for="full-order-date">Желаемая дата доставки</label>
-<input class="order-form__input" id="full-order-date" name="date" required="" type="date"/>
-<p class="form-error" id="order-date-error"></p>
-</div>
-<div class="order-form__field">
-<label class="order-form__label" for="full-order-comment">Комментарий к заказу</label>
-<textarea class="order-form__textarea" id="full-order-comment" name="comment" placeholder="Укажите адрес доставки или примечания к заказу..." rows="4"></textarea>
-</div>
-<div class="order-form__field-checkbox">
-<input class="order-form__checkbox" id="full-order-agreement" name="agreement" required="" type="checkbox"/>
-<label class="order-form__label order-form__label--checkbox" for="full-order-agreement">Я согласен на обработку персональных данных</label>
-<p class="form-error" id="order-agreement-error"></p>
-</div>
-<button class="button button--primary order-form__button--submit" type="submit">Подтвердить заказ</button>
-<p aria-live="polite" class="form-message" role="status" tabindex="-1"></p>
-</form></section>
+</section>
 </section>
 </main>
 <div aria-live="polite" class="shop-notice" hidden="" id="shop-notice" role="status"></div><footer class="site-footer">

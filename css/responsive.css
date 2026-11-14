@@ -584,6 +584,7 @@ textarea:focus-visible {
   .product-card__description {
     max-width: 44ch;
     margin: 0 auto;
+    text-align: center;
     font-size: 16px;
     line-height: 1.55;
     overflow-wrap: break-word;
@@ -677,7 +678,7 @@ textarea:focus-visible {
   .breadcrumbs > * + *::before { margin: 0 6px; }
 }
 
-/* На широкой объединённой форме имя не растягивается на всю строку. */
+/* На широкой форме оформления имя не растягивается на всю строку. */
 @media (min-width: 768px) {
   .checkout-section .order-form:not(.order-form--modal-gap) .order-form__field:first-child {
     grid-column: auto;

@@ -5,8 +5,6 @@ const cartSummary = document.querySelector('#cart-summary');
 const promoForm = document.querySelector('#promo-form');
 const promoInput = document.querySelector('#promo-code');
 const promoMessage = document.querySelector('#promo-message');
-const checkoutSection = document.querySelector('#checkout-section');
-const checkoutSuccess = document.querySelector('#checkout-success');
 const cartHeading = document.querySelector('#cart-items-heading');
 const cartItemsSection = document.querySelector('#cart-items-section');
 
@@ -22,12 +20,10 @@ if (productId !== null) {
 function renderCart() {
   const cart = getCart();
   cartList.replaceChildren();
-  if (cart.length > 0) checkoutSuccess.hidden = true;
-  cartEmpty.hidden = cart.length > 0 || !checkoutSuccess.hidden;
+  cartEmpty.hidden = cart.length > 0;
   cartHeading.hidden = cart.length === 0;
   cartItemsSection.hidden = cart.length === 0;
   cartSummary.hidden = cart.length === 0;
-  checkoutSection.hidden = cart.length === 0;
 
   cart.forEach((entry) => {
     const item = findProductById(products, entry.id);
@@ -116,7 +112,6 @@ promoForm.addEventListener('submit', (event) => {
 });
 
 document.querySelector('#cart-clear').addEventListener('click', () => {
-  checkoutSuccess.hidden = true;
   clearCart();
   promoMessage.textContent = 'Корзина очищена.';
 });

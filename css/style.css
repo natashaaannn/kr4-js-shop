@@ -202,6 +202,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  height: 100%;
   padding: var(--space-md);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -255,12 +256,23 @@ html {
 }
 .product-card__title {
   margin: 0;
+  width: 100%;
+  min-height: calc(1.3em * 2);
+  line-height: 1.3;
+  text-align: center;
   color: var(--color-primary);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 .product-card__description {
+  flex: 1 1 auto;
+  width: 100%;
   margin: 0;
+  min-height: calc(1.6em * 3);
   color: #ffdbb5;
-  text-align: left;
+  text-align: center;
   line-height: 1.6;
 }
 
@@ -742,20 +754,22 @@ html {
   font-size: .8em;
 }
 .product-card__price {
+  width: 100%;
   margin: 0;
+  text-align: center;
   font-weight: 700;
   color: var(--color-primary);
-  margin-top: auto;
   font-size: 18px;
 }
-.product-card__availability { margin: 0; color: #e9e0ef; font-size: 14px; }
-.product-card__availability.is-unavailable { color: #ffb3b3; }
+.product-card__availability { width: 100%; margin: 0; min-height: 1.4em; text-align: center; color: #e9e0ef; font-size: 14px; }
+.product-card__availability.is-unavailable { color: #ffffff; }
 .product-card__actions {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: auto;
+  padding-top: 8px;
 }
 .product-card__actions .button {
   display: inline-flex;
@@ -848,15 +862,6 @@ html {
 .cart-summary__disclaimer { color: #d7c4e2; font-size: 14px; }
 
 /* Финальные исправления интерфейса КР №4. */
-/* Ссылка на корзину должна быть заметна и гармонировать с магазином. */
-.section__text a.checkout-cart-link {
-  color: #ff841f;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.section__text a.checkout-cart-link:hover { color: #ffb16c; }
-
 /* Верхний блок поиска, категории и сортировки — ровные колонки и высота. */
 .catalog-controls {
   display: grid;
@@ -1021,7 +1026,7 @@ input[type="checkbox"],
 .catalog-filter-disclosure .filters-form__actions .button--secondary:hover { background: #ff6a00; color: #150d1d; }
 .catalog-filter-disclosure .filters-form__fieldset { min-width: 0; }
 
-/* Один экран оформления: товары, сумма и контактные данные. */
+/* Раздельные страницы корзины и оформления: общие элементы интерфейса. */
 .checkout-step__title {
   color: #ff8c24;
   text-transform: uppercase;
@@ -1113,3 +1118,71 @@ input[type="checkbox"],
 
 /* КР4 v7: единая типографика трёх шагов оформления. */
 .cart-summary > .checkout-step__title { margin-top: 0; }
+
+/* Итог оформления: без повторения товаров, только понятная стоимость. */
+.order-summary {
+  padding: 24px;
+}
+.order-cost-breakdown {
+  display: grid;
+  gap: 14px;
+}
+.order-cost-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.order-cost-row strong {
+  flex-shrink: 0;
+  color: #ffdbb5;
+  font-variant-numeric: tabular-nums;
+}
+.order-cost-row--discount strong {
+  color: #ffab69;
+}
+.order-cost-row[hidden] {
+  display: none;
+}
+.order-cost-row--total {
+  margin-top: 4px;
+  padding-top: 20px;
+  border-top: 1px solid #5e386e;
+  font-size: 24px;
+  font-weight: 700;
+}
+.order-cost-row--total strong {
+  color: #ff6a00;
+  font-size: 27px;
+}
+.checkout-cart-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-top: 26px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  background-color: #ff6a00;
+  color: #170e20;
+  font-weight: 700;
+  text-align: center;
+}
+.checkout-cart-back:hover {
+  background-color: #ff984a;
+  color: #170e20;
+}
+.checkout-cart-back:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+@media (max-width: 639px) {
+  .order-summary { padding: 18px; }
+  .order-cost-row { font-size: 16px; }
+  .order-cost-row--total { font-size: 21px; }
+  .order-cost-row--total strong { font-size: 23px; }
+  .checkout-cart-back { width: 100%; }
+}

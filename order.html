@@ -1,12 +1,108 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<title>Переход к оформлению заказа — SpookyShop</title>
-<noscript><meta http-equiv="refresh" content="0; url=cart.html"></noscript>
-<script>window.location.replace('cart.html' + window.location.search + window.location.hash);</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Оформление заказа SpookyShop: состав заказа, итоговая стоимость и контактные данные." name="description"/>
+<title>Оформление заказа — SpookyShop</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/responsive.css" rel="stylesheet"/>
+<script defer="" src="js/data.js"></script><script defer="True" src="js/store.js"></script>
+<script defer="" src="js/main.js"></script>
+<script defer="" src="js/order.js"></script>
+<script defer="" src="js/validation.js"></script>
 </head>
-<body><p>Оформление заказа находится в <a href="cart.html">корзине SpookyShop</a>.</p></body>
+<body>
+<a class="skip-link" href="#main">Перейти к основному содержимому</a>
+<header class="site-header">
+<div class="site-header__inner">
+<a class="site-header__logo" href="index.html">SpookyShop</a>
+<button aria-controls="site-navigation" aria-expanded="false" class="site-nav__toggle" type="button"><span aria-hidden="true">☰</span> <span>Меню</span></button>
+<nav aria-label="Основная навигация" class="site-nav" id="site-navigation">
+<ul class="site-nav__list">
+<li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
+<li class="site-nav__item"><a class="site-nav__link" href="favorites.html">Избранное <span class="nav-counter" data-favorite-count="">0</span></a></li><li class="site-nav__item"><a aria-current="page" class="site-nav__link site-nav__link--active" href="cart.html">Корзина <span class="nav-counter" data-cart-count="">0</span></a></li><li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main class="main-content" id="main" tabindex="-1">
+<nav aria-label="Хлебные крошки" class="breadcrumbs">
+<a class="breadcrumbs__link" href="index.html">Главная</a>
+<a class="breadcrumbs__link" href="cart.html">Корзина</a>
+<span aria-current="page" class="breadcrumbs__current">Оформление заказа</span>
+</nav>
+<section class="section section--card">
+<h1 class="section__title">Оформление заказа</h1>
+<p class="section__text">Проверьте итоговую стоимость, затем заполните контактные данные.</p>
+<p class="checkout-success" hidden id="checkout-success" role="status" tabindex="-1">Заказ оформлен в демонстрационном режиме. Реальная отправка и оплата не выполняются.</p>
+<p class="shop-empty" hidden id="order-empty">В корзине пока нет товаров. <a href="catalog.html">Перейти в каталог</a>, чтобы выбрать товары.</p>
+<section aria-labelledby="order-summary-heading" class="cart-summary checkout-section order-summary" hidden id="order-summary">
+<h2 class="checkout-step__title" id="order-summary-heading">1. Итоговая стоимость</h2>
+<div class="order-cost-breakdown">
+<div class="order-cost-row">
+<span>Стоимость товаров</span>
+<strong id="order-subtotal">0 ₽</strong>
+</div>
+<div class="order-cost-row order-cost-row--discount" hidden id="order-discount-row">
+<span>Скидка по промокоду</span>
+<strong id="order-discount">0 ₽</strong>
+</div>
+<div class="order-cost-row order-cost-row--total">
+<span>К оплате</span>
+<strong id="order-total">0 ₽</strong>
+</div>
+</div>
+<a class="button checkout-cart-back" href="cart.html"><span aria-hidden="true">←</span> Вернуться в корзину</a>
+</section>
+<section aria-labelledby="checkout-heading" class="checkout-section" hidden id="checkout-section">
+<h2 class="checkout-step__title" id="checkout-heading">2. Контактные данные и подтверждение</h2>
+<p class="checkout-section__intro">Укажите имя, e-mail, телефон и желаемую дату доставки.</p>
+<form action="#" class="order-form checkout-form" id="order-form" method="post" novalidate="">
+
+<div class="order-form__field">
+<label class="order-form__label" for="full-order-name">Ваше имя</label>
+<input class="order-form__input" id="full-order-name" name="name" placeholder="Введите имя и фамилию" required="" type="text"/>
+<p class="form-error" id="order-name-error"></p>
+</div>
+<div class="order-form__field">
+<label class="order-form__label" for="full-order-email">E-mail для связи</label>
+<input autocomplete="email" class="order-form__input" id="full-order-email" name="email" placeholder="example@mail.ru" required="" type="email"/>
+<p class="form-error" id="order-email-error"></p>
+</div>
+<div class="order-form__field">
+<label class="order-form__label" for="full-order-phone">Контактный телефон</label>
+<input class="order-form__input" id="full-order-phone" inputmode="tel" name="phone" placeholder="+7 (900) 000-00-00" required="" type="tel"/>
+<p class="form-error" id="order-phone-error"></p>
+<small class="order-form__help">Формат: +7 (900) 000-00-00 или 8 (900) 000-00-00</small>
+</div>
+<div class="order-form__field">
+<label class="order-form__label" for="full-order-date">Желаемая дата доставки</label>
+<input class="order-form__input" id="full-order-date" name="date" required="" type="date"/>
+<p class="form-error" id="order-date-error"></p>
+</div>
+<div class="order-form__field">
+<label class="order-form__label" for="full-order-comment">Комментарий к заказу</label>
+<textarea class="order-form__textarea" id="full-order-comment" name="comment" placeholder="Укажите адрес доставки или примечания к заказу..." rows="4"></textarea>
+</div>
+<div class="order-form__field-checkbox">
+<input class="order-form__checkbox" id="full-order-agreement" name="agreement" required="" type="checkbox"/>
+<label class="order-form__label order-form__label--checkbox" for="full-order-agreement">Я согласен на обработку персональных данных</label>
+<p class="form-error" id="order-agreement-error"></p>
+</div>
+<button class="button button--primary order-form__button--submit" type="submit">Подтвердить заказ</button>
+<p aria-live="polite" class="form-message" role="status" tabindex="-1"></p>
+</form>
+</section>
+</section>
+</main>
+<div aria-live="polite" class="shop-notice" hidden="" id="shop-notice" role="status"></div><footer class="site-footer">
+<div class="site-footer__inner">
+<p class="site-footer__copy">© 2026 Магазин SpookyShop. Все права защищены.</p>
+</div>
+</footer>
+</body>
 </html>

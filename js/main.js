@@ -161,7 +161,7 @@ function createProductCard(item) {
   buy.className = 'button button--primary';
   buy.dataset.action = 'add-to-cart';
   buy.dataset.productId = String(item.id);
-  buy.textContent = item.isAvailable ? 'В корзину' : 'Нет в наличии';
+  buy.textContent = 'В корзину';
   buy.disabled = !item.isAvailable;
   actions.append(buy);
 
